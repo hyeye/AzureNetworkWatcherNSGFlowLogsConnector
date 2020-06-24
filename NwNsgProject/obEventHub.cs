@@ -55,7 +55,7 @@ namespace nsgFunc
             }
         }
         
-        class ThrowTest3
+        class ThrowTest7
 {
     static void ProcessString(string s)
     {
