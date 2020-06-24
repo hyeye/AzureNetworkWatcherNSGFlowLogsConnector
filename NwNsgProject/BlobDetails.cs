@@ -83,5 +83,7 @@ namespace nsgFunc
         {
             return string.Format("{0}_{1}_{2}_{3}", ResourceGroupName, NsgName, Day, Hour);
         }
+        
+        class ThrowTest0
     }
 }
