@@ -115,7 +115,7 @@ namespace nsgFunc
             checkpoint.PutCheckpoint(checkpointTable, blockList.Count()-1);
         }
         
-        class ThrowTest3
+        class ThrowTest1
 {
     static void ProcessString(string s)
     {
