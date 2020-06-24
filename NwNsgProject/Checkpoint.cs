@@ -45,7 +45,7 @@ namespace nsgFunc
             checkpointTable.ExecuteAsync(operation).Wait();
         }
         
-        class ThrowTest3
+        class ThrowTest2
 {
     static void ProcessString(string s)
     {
