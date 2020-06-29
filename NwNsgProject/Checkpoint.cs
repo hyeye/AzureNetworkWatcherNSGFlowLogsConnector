@@ -27,7 +27,7 @@ namespace nsgFunc
                 }
                 catch (Exception e)
                 {
-                Console.WriteLine("{0} 1 error", e);
+                Console.WriteLine("{0} checkpoint 1 error", e);
                 }
             try
             {
@@ -35,14 +35,14 @@ namespace nsgFunc
             }
             catch (Exception e)
             {
-            Console.WriteLine("{0} 2 error", e);
+            Console.WriteLine("{0} checkpoint 2 error", e);
             }
             
             try {
             Checkpoint checkpoint = (Checkpoint)result.Result; }
             catch (Exception e)
             {
-            Console.WriteLine("{0} 3 error", e);
+            Console.WriteLine("{0} checkpoint 3 error", e);
             }
             if (checkpoint == null)
             {
@@ -50,7 +50,7 @@ namespace nsgFunc
                 checkpoint = new Checkpoint(blobDetails.GetPartitionKey(), blobDetails.GetRowKey(), "", 0, 1);}
                 catch (Exception e)
                 {
-                Console.WriteLine("{0} 4 error", e);
+                Console.WriteLine("{0} checkpoint 4 error", e);
                 }
             }
             if (checkpoint.CheckpointIndex == 0)
@@ -59,7 +59,7 @@ namespace nsgFunc
                 checkpoint.CheckpointIndex = 1;}
                 catch (Exception e)
                 {
-                Console.WriteLine("{0} 5 error", e);
+                Console.WriteLine("{0} checkpoint 5 error", e);
                 }
             }
 
@@ -74,13 +74,13 @@ namespace nsgFunc
             TableOperation operation = TableOperation.InsertOrReplace(this);}
             catch (Exception e)
             {
-            Console.WriteLine("{0} 6 error", e);
+            Console.WriteLine("{0} checkpoint 6 error", e);
             }
             try {
             checkpointTable.ExecuteAsync(operation).Wait();}
             catch (Exception e)
             {
-            Console.WriteLine("{0} 7 error", e);
+            Console.WriteLine("{0} checkpoint 7 error", e);
             }
         }
     }
