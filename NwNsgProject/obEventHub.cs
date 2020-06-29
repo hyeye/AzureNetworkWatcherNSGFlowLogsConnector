@@ -14,6 +14,7 @@ namespace nsgFunc
     {
         private static Lazy<EventHubClient> LazyEventHubConnection = new Lazy<EventHubClient>(() =>
         {
+            try {
             string EventHubConnectionString = GetEnvironmentVariable("eventHubConnection");
             string EventHubName = GetEnvironmentVariable("eventHubName");
 
@@ -22,6 +23,10 @@ namespace nsgFunc
                 EntityPath = EventHubName
             };
             var eventHubClient = EventHubClient.CreateFromConnectionString(connectionStringBuilder.ToString());
+            }
+            catch (Exception e) {
+                Console.WriteLine("{0} evh 1 error", e);
+            }
 
             return eventHubClient;
         });
@@ -54,41 +59,6 @@ namespace nsgFunc
                 yield return outgoingJson;
             }
         }
-        
-        class ThrowTest7
-{
-    static void ProcessString(string s)
-    {
-        if (s == null)
-        {
-            throw new ArgumentNullException();
-        }
-    }
-
-    static void Main()
-    {
-        try
-        {
-            string s = null;
-            ProcessString(s);
-        }
-        // Most specific:
-        catch (ArgumentNullException e)
-        {
-            Console.WriteLine("{0} First exception caught.", e);
-        }
-        // Least specific:
-        catch (Exception e)
-        {
-            Console.WriteLine("{0} Second exception caught.", e);
-        }
-    }
-}
-/*
- Output:
- System.ArgumentNullException: Value cannot be null.
- at Test.ThrowTest3.ProcessString(String s) ... First exception caught.
-*/
         
     }
 }
