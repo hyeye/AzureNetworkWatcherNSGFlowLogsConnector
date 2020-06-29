@@ -20,18 +20,47 @@ namespace nsgFunc
 
         public static Checkpoint GetCheckpoint(BlobDetails blobDetails, CloudTable checkpointTable)
         {
+            try 
+            {
             TableOperation operation = TableOperation.Retrieve<Checkpoint>(
                 blobDetails.GetPartitionKey(), blobDetails.GetRowKey());
+                }
+                catch (Exception e)
+                {
+                Console.WriteLine("{0} 1 error", e);
+                }
+            try
+            {
             TableResult result = checkpointTable.ExecuteAsync(operation).Result;
-
-            Checkpoint checkpoint = (Checkpoint)result.Result;
+            }
+            catch (Exception e)
+            {
+            Console.WriteLine("{0} 2 error", e);
+            }
+            
+            try {
+            Checkpoint checkpoint = (Checkpoint)result.Result; }
+            catch (Exception e)
+            {
+            Console.WriteLine("{0} 3 error", e);
+            }
             if (checkpoint == null)
             {
-                checkpoint = new Checkpoint(blobDetails.GetPartitionKey(), blobDetails.GetRowKey(), "", 0, 1);
+                try {
+                checkpoint = new Checkpoint(blobDetails.GetPartitionKey(), blobDetails.GetRowKey(), "", 0, 1);}
+                catch (Exception e)
+                {
+                Console.WriteLine("{0} 4 error", e);
+                }
             }
             if (checkpoint.CheckpointIndex == 0)
             {
-                checkpoint.CheckpointIndex = 1;
+                try {
+                checkpoint.CheckpointIndex = 1;}
+                catch (Exception e)
+                {
+                Console.WriteLine("{0} 5 error", e);
+                }
             }
 
             return checkpoint;
@@ -40,45 +69,19 @@ namespace nsgFunc
         public void PutCheckpoint(CloudTable checkpointTable, int index)
         {
             CheckpointIndex = index;
-
-            TableOperation operation = TableOperation.InsertOrReplace(this);
-            checkpointTable.ExecuteAsync(operation).Wait();
+            
+            try {
+            TableOperation operation = TableOperation.InsertOrReplace(this);}
+            catch (Exception e)
+            {
+            Console.WriteLine("{0} 6 error", e);
+            }
+            try {
+            checkpointTable.ExecuteAsync(operation).Wait();}
+            catch (Exception e)
+            {
+            Console.WriteLine("{0} 7 error", e);
+            }
         }
-        
-        class ThrowTest2
-{
-    static void ProcessString(string s)
-    {
-        if (s == null)
-        {
-            throw new ArgumentNullException();
-        }
-    }
-
-    static void Main()
-    {
-        try
-        {
-            string s = null;
-            ProcessString(s);
-        }
-        // Most specific:
-        catch (ArgumentNullException e)
-        {
-            Console.WriteLine("{0} First exception caught.", e);
-        }
-        // Least specific:
-        catch (Exception e)
-        {
-            Console.WriteLine("{0} Second exception caught.", e);
-        }
-    }
-}
-/*
- Output:
- System.ArgumentNullException: Value cannot be null.
- at Test.ThrowTest3.ProcessString(String s) ... First exception caught.
-*/
-        
     }
 }
